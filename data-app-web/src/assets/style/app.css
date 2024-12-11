@@ -1,0 +1,108 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #accaed;
+    color: #333;
+  }
+  .image-with-title {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 垂直居中对齐 */
+  }
+  
+  .image {
+    max-width: 100%; /* 确保图片不会超出容器 */
+    height: auto;    /* 保持宽高比 */
+    margin-right: 20px; /* 标题与图片之间的间距 */
+  }
+  
+  .title {
+    font-size: 2em; /* 根据需要调整字体大小 */
+    text-align: center;
+    font-style: inherit;
+    font-weight: bold;
+    color: #331ad9;
+  }
+  #app {
+    max-width: 100%;
+    margin: 0%;
+    background-color: #accaed;
+    /*
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    */
+  }
+ .container {
+  max-width: 100%;
+  margin-left: 50px;
+  margin-right: 50px;
+  background-color: #f6f1db;
+  border-radius: 8px;
+}
+h1 {
+  font-size: 2em;
+  text-align: left;
+  color: #101010;
+  margin-bottom: 20px;
+}
+h2 {
+  margin: 10px;
+  font-size: 2em;
+  text-align: left;
+  color: #2981e6;
+  margin-bottom: 20px;
+}
+
+/* Form */
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* File Input */
+.file-input {
+  width: 200px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+.file-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Submit Button */
+.submit-button {
+  padding: 4px 22px;
+  background-color: #007bff8e;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Message Display */
+.message {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  color: #155724;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
