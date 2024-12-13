@@ -1,12 +1,18 @@
 <template>
     <div class="container">
-      <h2>数据切分</h2>
-      <p style="color:#2981e6;font-size:15px;font-weight:bold;margin:10px;">功能: 划分数据集</p>
-      <p style="color:#2981e6;font-size:15px;font-weight:bold;margin:10px;">使用说明: 上传含文件的zip格式压缩包文件, 压缩包内应包含一个文件夹, 上传成功后选择划分的测试集比例, 点击提交即可</p>
+      <h2>视频抽帧</h2>
+      <p style="color:#2981e6;font-size:15px;font-weight:bold;margin:10px;">功能: 将视频转为图片</p>
+      <p style="color:#2981e6;font-size:15px;font-weight:bold;margin:10px;">使用说明: 上传含文件的zip格式压缩包文件, 压缩包内应包含一个视频文件夹, 上传成功后选择帧率和图片格式, 点击提交即可</p>
       <form @submit.prevent="uploadFile">
         <input type="file" ref="fileInput" accept=".zip,.rar,.7z"  class="file-input" required />
-        <label for="splitRatio" style="font-size: 13px;">测试集比例:</label>
-        <input type="number" id="splitRatio" v-model="splitRatio" min="0.1" max="0.9" step="0.1" class="form-control" style="margin-right: 20px;">
+        <label for="fps" style="font-size: 13px;">输入抽帧帧率(即几秒一帧):</label>
+        <input type="number" id="fps" v-model="fps" class="form-control" style="margin-right: 20px;width: 50px;">
+        <label for="fileExt" style="font-size: 13px;">选择保存图片格式:</label>
+        <select name="fileExt" id="fileExt" v-model="fileExt" style="margin-right: 20px;">
+            <option value=".jpg">.jpg</option>
+            <option value=".png">.png</option>
+        </select>
+
         <button type="submit" class="submit-button">提交</button>
       </form>
       <p v-if="message">{{ message }}</p>
@@ -20,7 +26,8 @@ import { saveAs } from 'file-saver'; //保存文件的库
 export default {
   data() {
     return {
-      splitRatio: 0.2, //默认切分比例为0.2
+      fps: 1, //默认抽帧帧率为1
+      fileExt: '.jpg',
       message: '' // 用于存储并显示给用户的消息
     };
   },
@@ -36,13 +43,14 @@ export default {
 
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('splitRatio', this.splitRatio)
+      formData.append('fps', this.fps)
+      formData.append('fileExt', this.fileExt)
 
       try {
         // Show loading or processing message
         this.message = '正在处理文件...';
 
-        const response = await axios.post('/api/split_data', formData, {
+        const response = await axios.post('/api/cut_video', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },

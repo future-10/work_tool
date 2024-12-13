@@ -1,7 +1,6 @@
 import zipfile
 from io import BytesIO
 import os
-import tempfile
 from pathlib import Path
 
 def unzip_file(zip_src, dst_dir):

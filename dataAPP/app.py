@@ -1,11 +1,11 @@
 import shutil
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from common.File_process import make_dir
 from function.Check_Image import check_image
 from function.Split_Data import data_split
+from function.Cut_Video import video_cut
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:8080"}})
@@ -59,7 +59,19 @@ def split_data():
 # 视频抽帧
 @app.route("/cut_video", methods=['POST'])
 def cut_video():
-    pass
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']  # 获取文件
+
+    if file.filename == '':
+        return jsonify({'error': 'file not found'}), 400
+
+    file_path = os.path.join(uploader_path, file.filename)
+    file.save(file_path)
+    fps = eval(request.form.get('fps'))
+    file_ext = request.form.get('fileExt')
+    response, status_code = video_cut(file_path, fps, file_ext)
+    return response
 
 
 if __name__ == "__main__":
