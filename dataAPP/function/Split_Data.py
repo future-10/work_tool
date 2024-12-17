@@ -26,7 +26,7 @@ def data_split(input, thresh): # 此处thresh是测试集的占比
     test_file_list = file_list[:test_num]
     for file in file_list:
         file_path = os.path.join(extract_file_path, file)
-        print(file_path)
+        # print(file_path)
         if file in test_file_list:
             shutil.move(file_path, test_data_path)
         else:

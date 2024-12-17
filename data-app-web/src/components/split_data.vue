@@ -5,8 +5,7 @@
       <p style="color:#2981e6;font-size:15px;font-weight:bold;margin:10px;">使用说明: 上传含文件的zip格式压缩包文件, 压缩包内应包含一个文件夹, 上传成功后选择划分的测试集比例, 点击提交即可</p>
       <form @submit.prevent="uploadFile">
         <input type="file" ref="fileInput" accept=".zip,.rar,.7z"  class="file-input" required />
-        <label for="splitRatio" style="font-size: 13px;">测试集比例:</label>
-        <input type="number" id="splitRatio" v-model="splitRatio" min="0.1" max="0.9" step="0.1" class="form-control" style="margin-right: 20px;">
+        <input type="number" id="splitRatio" v-model="splitRatio" min="0.1" max="0.9" step="0.1" class="form-control" style="margin: 20px;">
         <button type="submit" class="submit-button">提交</button>
       </form>
       <p v-if="message">{{ message }}</p>

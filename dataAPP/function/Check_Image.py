@@ -17,7 +17,7 @@ def check_image(input):
     # print(input, extract_file_path)
     wrong_imgs = []
     pass_imgs = []
-
+    # 损坏判断
     for img in os.listdir(extract_file_path):
         img_path = os.path.join(extract_file_path, img)
         try:

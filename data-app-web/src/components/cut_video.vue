@@ -68,7 +68,7 @@ export default {
       } catch (error) {
         console.error('Error during file upload:', error);
         if (error.response && error.response.data) {
-          this.message = error.response.data.error || 'An error occurred.';
+          this.message = error.response.data.error || '一个错误产生.';
         } else {
           this.message = '处理文件时发生错误';
         }

@@ -1,108 +1,225 @@
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #accaed;
-    color: #333;
-  }
-  .image-with-title {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* 垂直居中对齐 */
-  }
+  margin: 0;
+  font-family: Arial, sans-serif;
+  /*background-color: #f9f9f9;*/
+  color: #333;
+  background: url("waves.jpg")  /*主页面背景图*/
+                no-repeat center center fixed;
+                /*兼容浏览器版本*/
+                -webkit-background-size: cover;
+                -o-background-size: cover;                
+                background-size: cover;
+} 
+.image-with-title {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 垂直居中对齐 */
+}
+
+.image {
+  max-width: 100%; /* 确保图片不会超出容器 */
+  height: auto;    /* 保持宽高比 */
+   /* 标题与图片之间的间距 */
+}
+
+.title {
+  font-size: 2em; /* 根据需要调整字体大小 */
+  text-align: center;
+  font-style: inherit;
+  font-weight: bold;
+  color: #fefdff;
+}
+#app {
   
-  .image {
-    max-width: 100%; /* 确保图片不会超出容器 */
-    height: auto;    /* 保持宽高比 */
-    margin-right: 20px; /* 标题与图片之间的间距 */
-  }
-  
-  .title {
-    font-size: 2em; /* 根据需要调整字体大小 */
-    text-align: center;
-    font-style: inherit;
-    font-weight: bold;
-    color: #331ad9;
-  }
-  #app {
-    max-width: 100%;
-    margin: 0%;
-    background-color: #accaed;
-    /*
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    */
-  }
- .container {
-  max-width: 100%;
-  margin-left: 50px;
-  margin-right: 50px;
-  background-color: #f6f1db;
-  border-radius: 8px;
+   max-width: 100%;
+  margin: 0%;
+
+ 
+  /*
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  */
+}
+.container {
+max-width: 100%;
+margin-left: 50px;
+margin-right: 50px;
+background-color: #f6f1db;
+border-radius: 8px;
 }
 h1 {
-  font-size: 2em;
-  text-align: left;
-  color: #101010;
-  margin-bottom: 20px;
+font-size: 2em;
+text-align: left;
+color: #00b7ff;
+margin-bottom: 20px;
 }
 h2 {
-  margin: 10px;
-  font-size: 2em;
-  text-align: left;
-  color: #2981e6;
-  margin-bottom: 20px;
+margin: 10px;
+font-size: 2em;
+text-align: left;
+color: #2981e6;
+margin-bottom: 20px;
 }
 
 /* Form */
 .upload-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 
 /* File Input */
 .file-input {
-  width: 200px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  transition: border-color 0.3s ease;
+width: 200px;
+padding: 10px;
+margin-bottom: 10px;
+border-radius: 4px;
+transition: border-color 0.3s ease;
 }
 
 .file-input:focus {
-  outline: none;
-  border-color: #007bff;
+outline: none;
+border-color: #007bff;
 }
 
 /* Submit Button */
 .submit-button {
-  padding: 4px 22px;
-  background-color: #007bff8e;
-  color: rgb(255, 255, 255);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+padding: 4px 22px;
+background-color: #007bff8e;
+color: rgb(255, 255, 255);
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-  background-color: #0056b3;
+background-color: #0056b3;
 }
 
 /* Message Display */
 .message {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #d4edda;
-  border: 1px solid #c3e6cb;
-  border-radius: 4px;
-  color: #155724;
-  font-size: 0.9em;
-  text-align: center;
+margin-top: 20px;
+padding: 10px;
+background-color: #d4edda;
+border: 1px solid #c3e6cb;
+border-radius: 4px;
+color: #155724;
+font-size: 0.9em;
+text-align: center;
 }
 
 .message.error {
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  color: #721c24;
+background-color: #f8d7da;
+border-color: #f5c6cb;
+color: #721c24;
+}
+/*外按钮大小颜色*/
+.dropbtn {
+background-color: #4569FF;
+color: white;
+padding: 18px;
+font-size: 18px;
+border-radius: 18px;
+border: none;
+cursor: pointer;
+}   
+
+/*鼠标靠近后颜色*/
+.dropdown:hover .dropbtn {
+background-color: blue;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 130px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+  color: rgb(0, 0, 0);
+  padding: 6px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #1091e1;
+}
+
+
+body,div{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+/*盒子div垂直居中*/
+.fa{
+  width:100vw;
+  height: 100vh;
+  display:flex;
+  justify-content:center;
+  
+  }
+/*内层盒子垂直水平居中*/
+.outside{
+  background-color: #fffef3f5;   /*主体背景颜色*/
+  align-items:center;
+  display:flex;
+  justify-content:center;
+  width: 2000px;
+}
+
+
+.son{
+ width:900px;
+ height: 900px;
+}
+
+
+/*弹窗样式*/
+.mask {
+  background-color: #000;
+  opacity: 0.3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.pop {
+  background-color: #ffffff;
+  position: fixed;
+  top: 100px;
+  left: 300px;
+  width: calc(100% - 600px);
+  height: calc(100% - 200px);
+  z-index: 2;
+  border-radius: 10px;
+}
+.btn {
+  background-color: #00b1fc;
+  border-radius: 4px;
+  border: 1px solid blue;
+  padding:  14px;
+  border: 1px;
+  color: white;
+}
+.btn:hover{
+  background-color: #006fb4;
 }
