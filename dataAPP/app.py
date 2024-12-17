@@ -6,6 +6,7 @@ from common.File_process import make_dir
 from function.Check_Image import check_image
 from function.Split_Data import data_split
 from function.Cut_Video import video_cut
+from function.Dedup_Data import data_dedup
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:8080"}})
@@ -68,11 +69,26 @@ def cut_video():
 
     file_path = os.path.join(uploader_path, file.filename)
     file.save(file_path)
-    fps = eval(request.form.get('fps'))
-    file_ext = request.form.get('fileExt')
+    fps = eval(request.form.get('fps')) # 从前端获取帧率
+    file_ext = request.form.get('fileExt') # 获取图片保存格式
     response, status_code = video_cut(file_path, fps, file_ext)
     return response
 
+# 数据去重
+@app.route('/dedup_data', methods=['POST'])
+def dedup_data():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']  # 获取文件
+
+    if file.filename == '':
+        return jsonify({'error': 'file not found'}), 400
+
+    file_path = os.path.join(uploader_path, file.filename)
+    file.save(file_path)
+    threshold = request.form.get('simThresh') # 获取相似度阈值
+    response, status_code = data_dedup(file_path, threshold)
+    return response
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000, debug=True)

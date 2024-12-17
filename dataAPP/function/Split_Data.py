@@ -13,7 +13,7 @@ def data_split(input, thresh): # 此处thresh是测试集的占比
 
     unzip_file(input, extract_file_dir)
     extract_file_path = os.path.join(extract_file_dir, os.path.splitext(filename)[0]) # 解压后的文件夹路径
-    print(extract_file_path)
+    # print(extract_file_path)
     train_data_path = os.path.join(extract_file_path, "train")
     test_data_path = os.path.join(extract_file_path, "test")
 

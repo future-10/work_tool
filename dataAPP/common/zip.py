@@ -16,7 +16,7 @@ def unzip_file(zip_src, dst_dir):
         fz.extractall(dst_dir)
     else:
         return "请上传zip类型压缩文件"
-
+# 多个文件压缩
 def zip_file(input:list):
     zip_buffer = BytesIO()
     with zipfile.ZipFile(zip_buffer, 'w') as zipf:

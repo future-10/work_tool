@@ -81,7 +81,7 @@
                                         <button @click="box21 = false" class="btn">关闭</button>
                                         <check_file :someProp="checkfilevalue" @custom-event="handleCheckfileEvent" />  <!--功能链接-->
                                     </div>
-                                    <button @click="box21 = true" class="btn">图片损坏检测</button> <!--功能标签按钮-->
+                                    <button @click="box21 = true" class="btn">待添加工具</button> <!--功能标签按钮-->
                                 </div>
                             </a>
 
@@ -93,7 +93,7 @@
                                         <button @click="box22 = false" class="btn">关闭</button>
                                         <check_file :someProp="checkfilevalue" @custom-event="handleCheckfileEvent" />  <!--功能链接-->
                                     </div>
-                                    <button @click="box22 = true" class="btn">图片损坏检测</button> <!--功能标签按钮-->
+                                    <button @click="box22 = true" class="btn">待添加工具</button> <!--功能标签按钮-->
                                 </div>
                             </a>
 
@@ -105,7 +105,7 @@
                                         <button @click="box23 = false" class="btn">关闭</button>
                                         <check_file :someProp="checkfilevalue" @custom-event="handleCheckfileEvent" />  <!--功能链接-->
                                     </div>
-                                    <button @click="box23 = true" class="btn">图片损坏检测</button> <!--功能标签按钮-->
+                                    <button @click="box23 = true" class="btn">待添加工具</button> <!--功能标签按钮-->
                                 </div>
                             </a>
                             
@@ -128,7 +128,7 @@
                                         <button @click="box31 = false" class="btn">关闭</button>
                                         <check_file :someProp="checkfilevalue" @custom-event="handleCheckfileEvent" />  <!--功能链接-->
                                     </div>
-                                    <button @click="box31 = true" class="btn">图片损坏检测</button> <!--功能标签按钮-->
+                                    <button @click="box31 = true" class="btn">待添加工具</button> <!--功能标签按钮-->
                                 </div>
                             </a>
 
@@ -140,7 +140,7 @@
                                         <button @click="box32 = false" class="btn">关闭</button>
                                         <check_file :someProp="checkfilevalue" @custom-event="handleCheckfileEvent" />  <!--功能链接-->
                                     </div>
-                                    <button @click="box32 = true" class="btn">图片损坏检测</button> <!--功能标签按钮-->
+                                    <button @click="box32 = true" class="btn">待添加工具</button> <!--功能标签按钮-->
                                 </div>
                             </a>
 
@@ -152,7 +152,7 @@
                                         <button @click="box33 = false" class="btn">关闭</button>
                                         <check_file :someProp="checkfilevalue" @custom-event="handleCheckfileEvent" />  <!--功能链接-->
                                     </div>
-                                    <button @click="box33 = true" class="btn">图片损坏检测</button> <!--功能标签按钮-->
+                                    <button @click="box33 = true" class="btn">待添加工具</button> <!--功能标签按钮-->
                                 </div>
                             </a>
 
