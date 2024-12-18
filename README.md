@@ -2,7 +2,7 @@
 本项目使用flask作为后端框架，Vue为前端框架
 #### 安装依赖库
 python=3.12  
-pip install -r requirements.txt
+pip install -r dataAPP/requirements.txt
 #### 安装Vue组件
 npm install axios  
 
