@@ -1,7 +1,7 @@
 import os
 import shutil
 from flask import send_file
-from common.File_process import make_dir, calculate_phash
+from common.File_process import make_dir, calculate_phash # 导入哈希计算函数
 from common.zip import unzip_file, zip_file
 import time
 
