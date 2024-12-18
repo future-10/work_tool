@@ -30,7 +30,8 @@ def data_dedup(input, thresh):
             else:
                 hash_dict[file] = phash
 
-    set_files = os.listdir(extract_file_path) # 去重后的图片列表
+    set_files = [os.path.join(extract_file_path,fp) for fp in os.listdir(extract_file_path)]# 去重后的图片列表
+
     result = zip_file(set_files)
     t = time.time()
     t = int(round(t * 1000))

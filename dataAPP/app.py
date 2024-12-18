@@ -86,7 +86,7 @@ def dedup_data():
 
     file_path = os.path.join(uploader_path, file.filename)
     file.save(file_path)
-    threshold = request.form.get('simThresh') # 获取相似度阈值
+    threshold = eval(request.form.get('simThresh')) # 获取相似度阈值
     response, status_code = data_dedup(file_path, threshold)
     return response
 

@@ -5,9 +5,9 @@
       <p style="color:#2981e6;font-size:15px;font-weight:bold;margin:10px;">使用说明: 上传含文件的zip格式压缩包文件, 压缩包内应包含一个视频文件夹, 上传成功后选择帧率和图片格式, 点击提交即可</p>
       <form @submit.prevent="uploadFile">
         <input type="file" ref="fileInput" accept=".zip,.rar,.7z"  class="file-input" required />
-        <label for="fps" style="font-size: 13px;">输入抽帧帧率(即几秒一帧):</label>
-        <input type="number" id="fps" v-model="fps" class="form-control" style="margin-right: 20px;width: 50px;">
-        <label for="fileExt" style="font-size: 13px;">选择保存图片格式:</label>
+        <label for="fps" style="font-size: 13px;">抽帧帧率(即几秒一帧):</label>
+        <input type="number" id="fps" v-model="fps" class="form-control" min="0" style="margin-right: 20px;width: 50px;">
+        <label for="fileExt" style="font-size: 13px;">保存图片格式:</label>
         <select name="fileExt" id="fileExt" v-model="fileExt" style="margin-right: 20px;">
             <option value=".jpg">.jpg</option>
             <option value=".png">.png</option>
@@ -26,7 +26,7 @@ import { saveAs } from 'file-saver'; //保存文件的库
 export default {
   data() {
     return {
-      fps: 1, //默认抽帧帧率为1
+      fps: 1.0, //默认抽帧帧率为1
       fileExt: '.jpg',
       message: '' // 用于存储并显示给用户的消息
     };

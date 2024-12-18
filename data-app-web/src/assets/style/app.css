@@ -49,7 +49,6 @@ border-radius: 8px;
 }
 h1 {
 font-size: 2em;
-text-align: left;
 color: #00b7ff;
 margin-bottom: 20px;
 }
@@ -114,6 +113,7 @@ background-color: #f8d7da;
 border-color: #f5c6cb;
 color: #721c24;
 }
+/**/
 /*外按钮大小颜色*/
 .dropbtn {
 background-color: #4569FF;
@@ -126,39 +126,7 @@ cursor: pointer;
 }   
 
 /*鼠标靠近后颜色*/
-.dropdown:hover .dropbtn {
-background-color: blue;
-}
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 130px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a {
-  color: rgb(0, 0, 0);
-  padding: 6px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .dropbtn {
-  background-color: #1091e1;
-}
 
 
 body,div{
@@ -212,14 +180,33 @@ padding:0;
   z-index: 2;
   border-radius: 10px;
 }
+
+/*内按钮样式*/
 .btn {
   background-color: #00b1fc;
   border-radius: 4px;
   border: 1px solid blue;
-  padding:  14px;
+  padding:  16px;
   border: 1px;
   color: white;
 }
 .btn:hover{
   background-color: #006fb4;
+}
+
+/*关闭按钮样式*/
+.close-btn {
+  background-color: #ff7878;
+  border-radius: 4px;
+  border: 1px solid blue;
+  padding:  14px;
+  border: 1px;
+  color: white;
+  float: right;
+}
+.close-btn:hover{
+  background-color: #ff0000;
+}
+.close-span{
+  font-size: 28px
 }
