@@ -17,6 +17,21 @@
 import axios from 'axios';
 import { saveAs } from 'file-saver'; //保存文件的库
 
+//文件名匹配函数
+function getFileNameFromContentDisposition(contentDisposition) {
+    if (!contentDisposition) return null;
+
+    // 使用正则表达式匹配 filename 参数值
+    const match = contentDisposition.match(/filename=["']?([^"'\s]+)["']?/i);
+    
+    if (match && match[1]) {
+        // 去除多余的引号和空白字符，并解码 URL 编码的字符
+        return decodeURIComponent(match[1].trim());
+    }
+
+    return null;
+}
+
 export default {
   data() {
     return {
@@ -28,6 +43,7 @@ export default {
     async uploadFile() {
       const fileInput = this.$refs.fileInput;
       const file = fileInput.files[0];
+
 
       if (!file) {
         this.message = 'Please select a file.';
@@ -48,9 +64,12 @@ export default {
           },
           responseType: 'blob'  // 确保响应内容作为二进制数据处理
         });
+        const contentDisposition = response.headers['content-disposition'];
+        const fileName = getFileNameFromContentDisposition(contentDisposition);
+        console.log(fileName)
 
         // 使用 FileSaver.js 直接保存文件
-        saveAs(response.data, 'result.zip');
+        saveAs(response.data, fileName);
 
         // 显示下载成功的消息
         this.message = '文件处理完成.';

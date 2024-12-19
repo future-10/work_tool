@@ -123,12 +123,23 @@ font-size: 18px;
 border-radius: 18px;
 border: none;
 cursor: pointer;
+
 }   
 
 /*鼠标靠近后颜色*/
+.dropbtn:hover{
+  background-color: #007bffcf;
+}
 
-
-
+/*按钮等距*/
+.out-btn-div{
+  display: flex;
+  text-align: center;
+}
+/*按钮等距*/
+.btn-div{
+  flex : 1;
+}
 body,div{
 box-sizing:border-box;
 margin:0;
@@ -189,6 +200,7 @@ padding:0;
   padding:  16px;
   border: 1px;
   color: white;
+  font-size: 0.9em;
 }
 .btn:hover{
   background-color: #006fb4;
@@ -209,4 +221,9 @@ padding:0;
 }
 .close-span{
   font-size: 28px
+}
+
+li{
+  list-style-type: none;
+  height: 70px;
 }

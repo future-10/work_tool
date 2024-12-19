@@ -3,6 +3,7 @@ from PIL import Image
 from flask import send_file
 from common.zip import unzip_file, zip_file
 from common.File_process import make_dir
+import time
 
 
 def check_image(input):
@@ -35,13 +36,15 @@ def check_image(input):
         pass_imgs.append(infotxt)
     result = zip_file(pass_imgs) # 文件打包
     #清理临时文件
+    t = time.time()
+    t = int(round(t * 1000))
     shutil.rmtree(extract_file_path)
     os.remove(input)
     response = send_file(
         result,
         mimetype='application/zip',
         as_attachment=True,
-        download_name='result.zip'
+        download_name=f'{t}.zip'
     )
     return response, 200
 

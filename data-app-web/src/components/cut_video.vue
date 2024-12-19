@@ -6,7 +6,7 @@
       <form @submit.prevent="uploadFile">
         <input type="file" ref="fileInput" accept=".zip,.rar,.7z"  class="file-input" required />
         <label for="fps" style="font-size: 13px;">抽帧帧率(即几秒一帧):</label>
-        <input type="number" id="fps" v-model="fps" class="form-control" min="0" style="margin-right: 20px;width: 50px;">
+        <input type="number" id="fps" v-model="fps" class="form-control" style="margin-right: 20px;width: 50px;">
         <label for="fileExt" style="font-size: 13px;">保存图片格式:</label>
         <select name="fileExt" id="fileExt" v-model="fileExt" style="margin-right: 20px;">
             <option value=".jpg">.jpg</option>
@@ -26,7 +26,7 @@ import { saveAs } from 'file-saver'; //保存文件的库
 export default {
   data() {
     return {
-      fps: 1.0, //默认抽帧帧率为1
+      fps: 1, //默认抽帧帧率为1
       fileExt: '.jpg',
       message: '' // 用于存储并显示给用户的消息
     };
@@ -35,6 +35,8 @@ export default {
     async uploadFile() {
       const fileInput = this.$refs.fileInput;
       const file = fileInput.files[0];
+
+      
 
       if (!file) {
         this.message = 'Please select a file.';
@@ -56,9 +58,9 @@ export default {
           },
           responseType: 'blob'  // 确保响应内容作为二进制数据处理
         });
-
+        const fileName = response.headers['content-disposition'].substring(response.headers['content-disposition'].indexOf('=') + 1)
         // 使用 FileSaver.js 直接保存文件
-        saveAs(response.data, 'result.zip');
+        saveAs(response.data, fileName);
 
         // 显示下载成功的消息
         this.message = '文件处理完成.';

@@ -13,6 +13,7 @@
 
 <script>
 import axios from 'axios';
+//import FileSaver from 'file-saver';
 import { saveAs } from 'file-saver'; //保存文件的库
 
 export default {
@@ -25,7 +26,8 @@ export default {
     async uploadFile() {
       const fileInput = this.$refs.fileInput;
       const file = fileInput.files[0];
-
+        
+      
       if (!file) {
         this.message = 'Please select a file.';
         return;
@@ -33,7 +35,7 @@ export default {
 
       const formData = new FormData();
       formData.append('file', file);
-
+      
       try {
         // Show loading or processing message
         this.message = '正在处理文件...';
@@ -44,10 +46,10 @@ export default {
           },
           responseType: 'blob'  // 确保响应内容作为二进制数据处理
         });
-
+        const fileName = response.headers['content-disposition'].substring(response.headers['content-disposition'].indexOf('=') + 1)
         // 使用 FileSaver.js 直接保存文件
-        saveAs(response.data, 'result.zip');
-
+        saveAs(response.data,fileName);
+        
         // 显示下载成功的消息
         this.message = '文件处理完成.';
 

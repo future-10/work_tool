@@ -36,6 +36,7 @@ def check_img():
     file.save(file_path)
     # 调用图像检查函数
     response, status_code = check_image(file_path)
+
     # print('---------------------')
     return response
 

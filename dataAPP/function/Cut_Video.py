@@ -59,6 +59,7 @@ def video_cut(input, fps:int, img_ext:str): # fps--每隔fps秒取一帧
         as_attachment=True,
         download_name=f'{t}.zip'
     )
+    # response.headers['Content-Disposition'] = f'attachment; filename="{t}.zip"'
     return response, 200
 
 
