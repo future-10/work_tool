@@ -182,7 +182,7 @@
 import check_file from './components/check_file.vue';
 import split_data from './components/split_data.vue';
 import cut_video from './components/cut_video.vue';
-import  dedup_data from './components/dedup_data.vue';
+import dedup_data from './components/dedup_data.vue';
 
 export default {
   name: 'App',

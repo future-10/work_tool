@@ -33,18 +33,20 @@ def video_cut(input, fps:int, img_ext:str): # fps--每隔fps秒取一帧
         frame_count = 0
         while True:
             ret, frame = cap.read()
+
             if not ret:
                 break
-            if cap.get(cv2.CAP_PROP_POS_FRAMES) % (fps * cap.get(cv2.CAP_PROP_FPS)) == 0:
+            if cap.get(cv2.CAP_PROP_POS_FRAMES) % (fps * int(cap.get(cv2.CAP_PROP_FPS))) == 0:
                 frame_name = os.path.join(v_img_path, f"{v_name}_{frame_count}{img_ext}")
                 cv2.imencode(img_ext, frame)[1].tofile(frame_name)
                 frame_count += 1
+                print(frame_name)
 
         cap.release()
 
     # 打包文件
     video2img_list = list(video_dict.values()) # 每个视频文件夹
-    # print(video_dict)
+    print(video2img_list)
     t = time.time()
     t = int(round(t * 1000))
     out_dir = os.path.join(extract_file_dir, f"{t}.zip")

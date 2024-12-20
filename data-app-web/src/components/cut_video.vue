@@ -6,7 +6,7 @@
       <form @submit.prevent="uploadFile">
         <input type="file" ref="fileInput" accept=".zip,.rar,.7z"  class="file-input" required />
         <label for="fps" style="font-size: 13px;">抽帧帧率(即几秒一帧):</label>
-        <input type="number" id="fps" v-model="fps" class="form-control" style="margin-right: 20px;width: 50px;">
+        <input type="number" id="fps" v-model="fps" class="form-control" min="0" style="margin-right: 20px;width: 50px;">
         <label for="fileExt" style="font-size: 13px;">保存图片格式:</label>
         <select name="fileExt" id="fileExt" v-model="fileExt" style="margin-right: 20px;">
             <option value=".jpg">.jpg</option>

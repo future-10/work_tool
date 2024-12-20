@@ -44,6 +44,6 @@ def data_split(input, thresh): # 此处thresh是测试集的占比
         as_attachment=True,
         download_name=f'{t}.zip'
     )
-    # response.headers['Content-Disposition'] = f'attachment; filename="{t}.zip"'
+
     return response, 200
 

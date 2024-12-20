@@ -1,6 +1,7 @@
 import shutil
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit
 import os
 from common.File_process import make_dir
 from function.Check_Image import check_image
@@ -10,6 +11,7 @@ from function.Dedup_Data import data_dedup
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:8080"}})
+# socketio = SocketIO(app)
 
 uploader_path = 'data' # 上传文件的存储路径
 make_dir(uploader_path)

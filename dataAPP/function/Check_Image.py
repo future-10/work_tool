@@ -45,6 +45,7 @@ def check_image(input):
         mimetype='application/zip',
         as_attachment=True,
         download_name=f'{t}.zip'
+
     )
     return response, 200
 
