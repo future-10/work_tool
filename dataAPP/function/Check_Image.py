@@ -4,7 +4,15 @@ from flask import send_file
 from common.zip import unzip_file, zip_file
 from common.File_process import make_dir
 import time
+from concurrent.futures import ThreadPoolExecutor
 
+
+def process_image(img_path):
+    try:
+        with Image.open(img_path) as image:
+            return img_path, None  # 成功返回图像路径和None错误
+    except Exception as e:
+        return None, img_path  # 失败返回None和图像名称
 
 def check_image(input):
 
@@ -15,18 +23,22 @@ def check_image(input):
 
     unzip_file(input, extract_file_dir)
     extract_file_path = os.path.join(extract_file_dir, os.path.splitext(filename)[0])
-    # print(input, extract_file_path)
+
+    all_images = [os.path.join(extract_file_path, img) for img in os.listdir(extract_file_path)]
+
     wrong_imgs = []
     pass_imgs = []
     # 损坏判断
-    for img in os.listdir(extract_file_path):
-        img_path = os.path.join(extract_file_path, img)
-        try:
-            with Image.open(img_path) as image:
-                pass_imgs.append(img_path)
-        except:
-            wrong_imgs.append(img)
-    # print(pass_imgs, wrong_imgs)
+    with ThreadPoolExecutor() as pool:
+        results = pool.map(process_image, all_images)
+
+    # print(results)
+        for result in results:
+            if result[0]:  # 如果第一个元素不是None，则表示成功
+                pass_imgs.append(result[0])
+            else:  # 否则添加到失败列表中
+                wrong_imgs.append(os.path.basename(result[1]))
+
     if wrong_imgs:
         infotxt = os.path.join(extract_file_path, "wrong_images.txt")
         with open(infotxt, "a", encoding='utf-8') as t:

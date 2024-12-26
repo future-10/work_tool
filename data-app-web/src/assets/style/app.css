@@ -40,13 +40,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   */
 }
-.container {
-max-width: 100%;
-margin-left: 50px;
-margin-right: 50px;
-background-color: #f6f1db;
-border-radius: 8px;
-}
+
 h1 {
 font-size: 2em;
 color: #00b7ff;
@@ -81,20 +75,6 @@ outline: none;
 border-color: #007bff;
 }
 
-/* Submit Button */
-.submit-button {
-padding: 4px 22px;
-background-color: #007bff8e;
-color: rgb(255, 255, 255);
-border: none;
-border-radius: 4px;
-cursor: pointer;
-transition: background-color 0.3s ease;
-}
-
-.submit-button:hover {
-background-color: #0056b3;
-}
 
 /* Message Display */
 .message {
@@ -160,36 +140,13 @@ padding:0;
   align-items:center;
   display:flex;
   justify-content:center;
-  width: 2000px;
+  width: 80%;
 }
 
 
 .son{
- width:900px;
- height: 900px;
-}
-
-
-/*弹窗样式*/
-.mask {
-  background-color: #000;
-  opacity: 0.3;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-.pop {
-  background-color: #ffffff;
-  position: fixed;
-  top: 100px;
-  left: 300px;
-  width: calc(100% - 600px);
-  height: calc(100% - 200px);
-  z-index: 2;
-  border-radius: 10px;
+ width: 50%;
+ height: 50%;
 }
 
 /*内按钮样式*/
@@ -201,6 +158,7 @@ padding:0;
   border: 1px;
   color: white;
   font-size: 0.9em;
+  cursor: pointer;
 }
 .btn:hover{
   background-color: #006fb4;
@@ -208,22 +166,180 @@ padding:0;
 
 /*关闭按钮样式*/
 .close-btn {
-  background-color: #ff7878;
-  border-radius: 4px;
-  border: 1px solid blue;
-  padding:  14px;
-  border: 1px;
-  color: white;
   float: right;
+  font-size: 25px;
+  border: 1px solid ;
+  border-radius: 4px;
+  cursor: pointer;
 }
 .close-btn:hover{
   background-color: #ff0000;
 }
-.close-span{
-  font-size: 28px
-}
+
 
 li{
   list-style-type: none;
   height: 70px;
 }
+
+
+/*弹窗样式*/
+/*外方框*/
+.modal {
+  display: block; /* 默认是block，因为v-if控制显示 */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.352);
+}
+
+/*内方框*/
+.modal-content {
+  background-color: #ffffff;
+  position: fixed;
+  top: 150px;   /*100;300*/
+  left: 450px;
+  width: calc(100% - 900px);    /* 600;200 */
+  height: calc(100% - 300px);
+  z-index: 2;
+  border-radius: 10px;
+  justify-content:center;   /**/
+}
+
+/*内窗口*/
+.container {
+  max-width: 100%;
+  margin-top: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
+  border-radius: 8px; 
+  background-color: #fffcf8cf;
+  }
+
+  /*功能描述div*/
+  .function-module{
+    max-width: 100%;
+    margin-top: 40px;
+    background-color: #fffae4;
+    border-radius: 8px;
+  }
+  /*功能描述*/
+  .function-module p{
+    color:#2981e6;
+    font-size:15px;
+    font-weight:bold;
+    margin:10px;
+  }
+  /*窗口中间按钮进度栏*/
+  .middle-window{
+    align-items: center;
+    text-align: center;
+    display: flex;
+  }
+
+  /*拖拽上传框样式*/
+.file-uploader {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 150px;
+  width:700px;
+  margin: 0 auto;
+  position: relative; /* 确保子元素的绝对定位相对于此容器 */
+}
+.file-uploader:hover {
+  background-color: #f9f9f9;
+}
+progress {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/*进度条文字样式*/
+.upload-status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(253, 255, 231); /* 半透明背景，可选 */
+  z-index: 1; /* 确位于之上 */
+  margin-top: 10px;
+}
+.upload-status-in  {
+  flex : 1;
+}
+
+/*提交输入框*/
+.upload-btn {
+  flex : 1;
+}
+
+.upload-btn label{
+   color:#2981e6;
+    font-size:15px;
+    font-weight:bold;
+    margin:10px;
+}
+.upload-btn p{
+    color:#2981e6;
+    font-size:15px;
+    font-weight:bold;
+    margin:10px;
+}
+/*提交按钮*/
+/* Submit Button */
+.submit-button {
+  background-color: #00b1fc;
+  border-radius: 8px;
+  border: 1px solid blue;
+  padding:  1%;
+  border: 1px;
+  color: white;
+  font-size: 1.5em;
+  cursor: pointer;
+  width: 20%;
+  }
+  
+  .submit-button:hover {
+  background-color: #0056b3;
+  }
+
+  /*流程图*/
+  .img-tool{
+    text-align: center;
+    background-color: #fffff0cf;
+    border-radius: 8px;
+    margin: 0 auto;
+  }
+
+  /*文件处理时加载图片*/
+  .processing-status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(254, 255, 244); /* 背景颜色 */
+    z-index: 1; /* 确保加载图片位于进度条之上 */
+  }
+  
+  .loading-image {
+    width: 200px; /* 你可以根据需要调整 */
+    height: auto;
+    margin-bottom: 10px; /* 使图片和消息之间有一些间距 */
+  }
+  .processing-message {
+    font-size: 16px;
+    color: #5db6ff;
+    font-weight: bold;
+  }

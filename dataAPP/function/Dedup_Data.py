@@ -23,6 +23,7 @@ def data_dedup(input, thresh):
 
     for file in file_list:
         file_path = os.path.join(extract_file_path, file)
+        print(file_path)
         phash = calculate_phash(file_path)
         if phash is not None:
             if any(is_similar(phash, h, thresh) for h in hash_dict.values()):

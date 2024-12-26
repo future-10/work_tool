@@ -1,90 +1,201 @@
 <template>
-    <div class="container">
+  <div class="container">
+      <div class="function-module">
       <h2>数据切分</h2>
-      <p style="color:#2981e6;font-size:15px;font-weight:bold;margin:10px;">功能: 划分数据集</p>
-      <p style="color:#2981e6;font-size:15px;font-weight:bold;margin:10px;">使用说明: 上传含文件的zip格式压缩包文件, 压缩包内应包含一个文件夹, 上传成功后选择划分的测试集比例, 点击提交即可</p>
-      <form @submit.prevent="uploadFile">
-        <input type="file" ref="fileInput" accept=".zip,.rar,.7z"  class="file-input" required />
-        <label for="splitRatio" style="font-size: 13px;">测试集比例:</label>
-        <input type="number" id="splitRatio" v-model="splitRatio" min="0.1" max="0.9" step="0.1" class="form-control" style="margin-right: 20px;">
-        <button type="submit" class="submit-button">提交</button>
-      </form>
-      <p v-if="message">{{ message }}</p>
-    </div>
-  </template>
+      <p>功能: 划分数据集</p>
+      <p>使用说明: 点击上传选择包含图片的zip格式压缩包文件, 选择划分的测试集比例, 点击提交即可</p>
+      </div>
+  <div class="middle-window">
+    <!-- 文件上传区域 -->
+  <div class="file-uploader" @drop.prevent="onDrop" @dragover.prevent>
+    <!-- 隐藏的文件输入框，用户点击上传按钮时触发 -->
+    <input
+      type="file"
+      @change="onFileChange"
+      ref="fileInput"
+      style="display: none"
+      accept=".zip,.rar,.7z"  required
+    />
+    <!-- 显示已选择的文件名 -->
+    <p v-if="file">已选择文件：{{ file.name }}</p>
+    <p v-else>将文件拖到这里，或者<button @click="openFileInput">点击上传</button></p>
 
+    <!-- 进度条和上传进度文本，当有文件正在上传时显示 -->
+    <div v-if="isUploading" class="upload-status">
+          <div class="upload-status-in"><p>上传进度：</p></div>
+          <div class="upload-status-in"><progress :value="uploadProgress" max="100"></progress></div>
+          <div class="upload-status-in"><p>{{ uploadProgress }}%</p></div>
+        </div>
+
+        <!-- 处理中的加载图片，覆盖进度条 -->
+        <div v-if="isProcessing" class="processing-status">
+          <img src="./tool-img/load.gif" alt="处理中" class="loading-image" />
+          <p class="processing-message">文件正在处理中。。。</p>
+        </div>
+    </div>
+  <!-- 上传按钮，点击后打开文件选择对话框 -->
+  <div class="upload-btn">
+    <li>
+    <form @submit.prevent="handleFormSubmit">
+      <label for="splitRatio" style="font-size: 13px;">测试集比例：</label>
+      <input type="number" id="splitRatio" v-model="splitRatio" min="0.1" max="0.9" step="0.1" class="form-control" style="margin: 20px;">
+    </form>
+    </li>
+
+    <li>
+      <p v-if="message">{{ message }}</p>
+    </li>
+    
+    <li>
+      <form @submit.prevent="handleFormSubmit">
+      <button type="submit" :disabled="!file" class="submit-button">提&nbsp;&nbsp;交</button>
+    </form>
+    </li>
+  </div>
+  
+  </div>
+  <div class="img-tool">
+    <img alt="Vue logo" src="./tool-explain/tool2.png" width="900px" height="auto" class="image">
+  </div>
+
+
+  
+  </div>
+</template>
 <script>
-import axios from 'axios';
+import { ref } from "vue";
+import axios from "axios";
 import { saveAs } from 'file-saver'; //保存文件的库
 
-//文件名匹配函数
-function getFileNameFromContentDisposition(contentDisposition) {
-    if (!contentDisposition) return null;
-
-    // 使用正则表达式匹配 filename 参数值
-    const match = contentDisposition.match(/filename=["']?([^"'\s]+)["']?/i);
-    
-    if (match && match[1]) {
-        // 去除多余的引号和空白字符，并解码 URL 编码的字符
-        return decodeURIComponent(match[1].trim());
-    }
-
-    return null;
-}
-
 export default {
-  data() {
-    return {
-      splitRatio: 0.2, //默认切分比例为0.2
-      message: '' // 用于存储并显示给用户的消息
-    };
-  },
-  methods: {
-    async uploadFile() {
-      const fileInput = this.$refs.fileInput;
-      const file = fileInput.files[0];
-
-
-      if (!file) {
-        this.message = 'Please select a file.';
-        return;
+  setup() {
+    // 存储选中的单个文件
+    const file = ref(null);
+    // 引用文件输入元素
+    const fileInput = ref(null);
+    // 标记是否正在上传文件
+    const isUploading = ref(false);
+    // 记录上传进度
+    const uploadProgress = ref(0);
+    // 消息提示
+    const message = ref('');
+    // 默认切分比例为0.2
+    const splitRatio = ref(0.2);
+    // 标记文件是否正在处理
+    const isProcessing = ref(false);
+    // 打开文件选择器的方法
+    const openFileInput = () => {
+      if (fileInput.value) {
+        // 触发文件输入框的点击事件，打开文件选择对话框
+        fileInput.value.click();
       }
+    };
 
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('splitRatio', this.splitRatio)
+    // 当文件输入框的值改变时触发，即选择了新文件
+    const onFileChange = (event) => {
+      // 获取选中的文件
+      const selectedFile = event.target.files[0];
+      if (selectedFile) {
+        // 保存选中的文件到 file 变量中
+        file.value = selectedFile;
+      }
+    };
+
+    // 处理文件拖放事件
+    const onDrop = (event) => {
+      // 获取拖放的文件
+      const droppedFile = event.dataTransfer.files[0];
+      if (droppedFile) {
+        // 保存拖放的文件到 file 变量中
+        file.value = droppedFile;
+      }
+    };
+
+    // 提交表单处理
+    const handleFormSubmit = async () => {
+      if (!file.value || isUploading.value) return; // 如果没有文件或正在上传则不执行
+
+      await uploadFile();
+    };
+
+    // 开始上传文件
+    const uploadFile = async () => {
+      isUploading.value = true; // 设置为正在上传状态
+      uploadProgress.value = 0; // 重置上传进度
+      isProcessing.value = false; // 确保在上传开始前关闭处理状态
+      message.value = ''; // 清除任何旧的消息
 
       try {
-        // Show loading or processing message
-        this.message = '正在处理文件...';
+        // 创建表单数据对象并添加文件
+        const formData = new FormData();
+        formData.append('file', file.value);
+        formData.append('splitRatio', splitRatio.value)
 
-        const response = await axios.post('/api/split_data', formData, {
+        // 发送POST请求上传文件
+        const response = await axios.post("/api/split_data", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            "Content-Type": "multipart/form-data", // 设置请求头
+          },
+         // 监听上传进度
+         onUploadProgress: (progressEvent) => {
+            if (progressEvent.lengthComputable) {
+              // 计算并更新上传进度
+              const percentComplete =
+                (progressEvent.loaded / progressEvent.total) * 100;
+              uploadProgress.value = Math.round(percentComplete);
+
+              // 当上传进度达到100%，设置为正在处理状态，并隐藏进度条
+              if (percentComplete >= 100) {
+                isUploading.value = false;
+                isProcessing.value = true;
+              }
+            }
           },
           responseType: 'blob'  // 确保响应内容作为二进制数据处理
         });
-        const contentDisposition = response.headers['content-disposition'];
-        const fileName = getFileNameFromContentDisposition(contentDisposition);
-        console.log(fileName)
+
+        // 获取后端文件名
+        const fileName = response.headers['content-disposition'].substring(response.headers['content-disposition'].indexOf('=') + 1).replace(/"/g, '');
 
         // 使用 FileSaver.js 直接保存文件
-        saveAs(response.data, fileName);
+        saveAs(response.data, decodeURIComponent(fileName));
 
-        // 显示下载成功的消息
-        this.message = '文件处理完成.';
-
-        // 清空文件输入框以便下次上传
-        fileInput.value = '';
+        // 显示文件处理成功的消息
+        message.value = '文件处理成功.';
       } catch (error) {
-        console.error('Error during file upload:', error);
-        if (error.response && error.response.data) {
-          this.message = error.response.data.error || 'An error occurred.';
-        } else {
-          this.message = '处理文件时发生错误';
+        // 捕获并处理上传错误
+        console.error("文件处理失败:", error);
+        message.value = '文件处理失败';
+      } finally {
+        isProcessing.value = false; // 关闭处理状态
+        file.value = null; // 清除已选择的文件
+        if (fileInput.value) {
+          fileInput.value.value = ''; // 重置文件输入框
         }
+
+        // 提示用户可以再次上传
+        setTimeout(() => {
+          if (!message.value) {
+            message.value = '您可以上传另一个文件。';
+          }
+        }, 1000); // 等待1秒后再显示提示，给用户一点时间阅读之前的成功或错误消息
       }
-    }
-  }
+    };
+
+    // 返回需要在模板中使用的变量和方法
+    return {
+      file,
+      fileInput,
+      openFileInput,
+      onFileChange,
+      onDrop,
+      isUploading,
+      uploadProgress,
+      message,  // 用于存储并显示给用户的消息
+      handleFormSubmit,
+      splitRatio,
+      isProcessing
+    };
+  },
 };
 </script>
