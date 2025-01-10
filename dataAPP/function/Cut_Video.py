@@ -1,11 +1,9 @@
 import os, cv2
-
 from common.File_process import make_dir
 from common.zip import unzip_file, zip_files
 import time, shutil
 from flask import send_file
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import ffmpeg
 
 
 def extract_frame(video_path, output_folder, fps, img_ext):
@@ -30,7 +28,7 @@ def extract_frame(video_path, output_folder, fps, img_ext):
         if not ret:
             break
         frame_name = os.path.join(output_folder, f"{os.path.splitext(os.path.basename(video_path))[0]}_{pos}{img_ext}")
-        print(frame_name)
+
         cv2.imencode(img_ext, frame)[1].tofile(frame_name)
     cap.release()
     return True
@@ -38,7 +36,7 @@ def extract_frame(video_path, output_folder, fps, img_ext):
 
 def video_cut(input, fps:int, img_ext:str): # fps--每隔fps秒取一帧
     filename = os.path.split(input)[-1]
-    print(filename)
+    # print(filename)
     extract_file_dir = os.path.dirname(input)
     make_dir(extract_file_dir)
 
@@ -48,7 +46,7 @@ def video_cut(input, fps:int, img_ext:str): # fps--每隔fps秒取一帧
 
     video_dict = {}
     futures = []
-    with ThreadPoolExecutor() as pool:
+    with ThreadPoolExecutor(max_workers=8) as pool:
         for v in video_list:
             v_name, e = os.path.splitext(v)
             v_img_path = os.path.join(extract_file_path, v_name)

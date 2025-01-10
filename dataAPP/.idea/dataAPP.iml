@@ -2,7 +2,7 @@
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="flask" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.10.12 (sftp://wuyingdong@10.162.88.67:22/ihoment/wuyingdong/flask/bin/python3.10) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="wuyingdong@10.162.88.67:22 agent" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="govee_wyd">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/ihoment/wuyingdong/work_tool/dataAPP" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="wuyingdong@10.162.88.67:22 agent">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/ihoment/wuyingdong/work_tool/dataAPP" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
