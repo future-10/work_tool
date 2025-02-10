@@ -11,7 +11,8 @@ import time
 
 def eval_aigc(input):
     # 初始化模型和分词器，确保只加载一次
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = 'cpu'
     bert_path = "/ihoment/wuyingdong/work_tool/dataAPP/bert"
     model_path = "/ihoment/wuyingdong/work_tool/dataAPP/model/fga_blip2.pth"
 
@@ -29,6 +30,8 @@ def eval_aigc(input):
 
     unzip_file(input, extract_file_dir)
     extract_file_path = os.path.join(extract_file_dir, os.path.splitext(filename)[0])
+    if not os.path.exists(extract_file_path): # 确保解压后的路径存在
+        return None, 400
     timestamp = int(round(time.time() * 1000))
     result_txt = os.path.join(extract_file_dir, f"result_aigc_{timestamp}.txt")
     _, name = os.path.split(result_txt)

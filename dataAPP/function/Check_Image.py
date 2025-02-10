@@ -10,7 +10,8 @@ from concurrent.futures import ThreadPoolExecutor
 def process_image(img_path):
     try:
         with Image.open(img_path) as image:
-            return img_path, None  # 成功返回图像路径和None错误
+            image.load() # 验证图片能否加载
+        return img_path, None  # 成功返回图像路径和None错误
     except Exception as e:
         return None, img_path  # 失败返回None和图像名称
 
@@ -28,6 +29,7 @@ def check_image(input):
 
     wrong_imgs = []
     pass_imgs = []
+    Image.MAX_IMAGE_PIXELS = 16777216 # 设置图片最大像素值-4096*4096
     # 损坏判断
     with ThreadPoolExecutor() as pool:
         results = pool.map(process_image, all_images)

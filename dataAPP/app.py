@@ -9,6 +9,7 @@ from function.Split_Data import data_split
 from function.Cut_Video import video_cut
 from function.Dedup_Data import data_dedup
 from function.AIGC_eval import eval_aigc
+from function.Format_Json import json_format
 
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:8080"}})
@@ -32,7 +33,7 @@ def check_img():
     if file.filename == '':
         return jsonify({'error': 'file not found'}), 400
     filename = secure_filename(file.filename)
-    print(filename)
+    # print(filename)
     file_path = os.path.join(uploader_path, filename)
     with open(file_path, "wb") as f:
         shutil.copyfileobj(file.stream, f)
@@ -75,9 +76,9 @@ def cut_video():
     if file.filename == '':
         return jsonify({'error': 'file not found'}), 400
 
-    # filename = secure_filename(file.filename)
+    filename = secure_filename(file.filename)
 
-    file_path = os.path.join(uploader_path, file.filename)
+    file_path = os.path.join(uploader_path, filename)
 
     # file.save(file_path)
     with open(file_path, "wb") as f:
@@ -99,12 +100,15 @@ def dedup_data():
     if file.filename == '':
         return jsonify({'error': 'file not found'}), 400
 
-    file_path = os.path.join(uploader_path, file.filename)
+    filename = secure_filename(file.filename)
+
+    file_path = os.path.join(uploader_path, filename)
     file.save(file_path)
     threshold = eval(request.form.get('simThresh')) # 获取相似度阈值
     response, status_code = data_dedup(file_path, threshold)
     return response
 
+# 文生图匹配度评分
 @app.route('/aigc_eval', methods=['POST'])
 def aigc_eval():
     if 'file' not in request.files:
@@ -114,9 +118,27 @@ def aigc_eval():
     if file.filename == '':
         return jsonify({'error': 'file not found'}), 400
 
-    file_path = os.path.join(uploader_path, file.filename)
+    filename = secure_filename(file.filename)
+
+    file_path = os.path.join(uploader_path, filename)
     file.save(file_path)
     response, status_code = eval_aigc(file_path)
+    return response
+
+@app.route('/format_json', methods=['POST'])
+def format_json():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']  # 获取文件
+
+    if file.filename == '':
+        return jsonify({'error': 'file not found'}), 400
+
+    filename = secure_filename(file.filename)
+
+    file_path = os.path.join(uploader_path, filename)
+    file.save(file_path)
+    response, status_code = json_format(file_path)
     return response
 
 

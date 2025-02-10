@@ -13,7 +13,7 @@ def unzip_file(zip_src, dst_dir):
     r = zipfile.is_zipfile(zip_src)
     if r:
         fz = zipfile.ZipFile(zip_src, "r")
-        fz.extractall(dst_dir)
+        fz.extractall(dst_dir) # 相当于解压到当前文件夹，
     else:
         return "请上传zip类型压缩文件"
 # 多个文件压缩
