@@ -1,5 +1,5 @@
 import os, shutil
-from flask import send_file
+from flask import send_file, jsonify
 from common.File_process import make_dir
 from common.zip import unzip_file, zip_files
 from random import shuffle
@@ -13,6 +13,8 @@ def data_split(input, thresh): # 此处thresh是测试集的占比
 
     unzip_file(input, extract_file_dir)
     extract_file_path = os.path.join(extract_file_dir, os.path.splitext(filename)[0]) # 解压后的文件夹路径
+    if not os.path.exists(extract_file_path): # 确保解压后的路径存在
+        return jsonify({'error':'压缩包内文件夹名与压缩包名不同'}), 400
     # print(extract_file_path)
     train_data_path = os.path.join(extract_file_path, "train")
     test_data_path = os.path.join(extract_file_path, "test")

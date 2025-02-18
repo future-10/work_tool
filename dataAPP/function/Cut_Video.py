@@ -2,7 +2,7 @@ import os, cv2
 from common.File_process import make_dir
 from common.zip import unzip_file, zip_files
 import time, shutil
-from flask import send_file
+from flask import send_file, jsonify
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
@@ -42,6 +42,8 @@ def video_cut(input, fps:int, img_ext:str): # fps--每隔fps秒取一帧
 
     unzip_file(input, extract_file_dir)
     extract_file_path = os.path.join(extract_file_dir, os.path.splitext(filename)[0])
+    if not os.path.exists(extract_file_path): # 确保解压后的路径存在
+        return jsonify({'error':'压缩包内文件夹名与压缩包名不同'}), 400
     video_list = os.listdir(extract_file_path) # 获取视频文件列表
 
     video_dict = {}

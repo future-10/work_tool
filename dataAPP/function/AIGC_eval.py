@@ -3,7 +3,7 @@ import torch
 from PIL import Image
 from transformers import BertTokenizer
 from common.File_process import make_dir
-from flask import send_file
+from flask import send_file, jsonify
 import os, shutil
 from common.zip import unzip_file
 import time
@@ -31,7 +31,7 @@ def eval_aigc(input):
     unzip_file(input, extract_file_dir)
     extract_file_path = os.path.join(extract_file_dir, os.path.splitext(filename)[0])
     if not os.path.exists(extract_file_path): # 确保解压后的路径存在
-        return None, 400
+        return jsonify({'error':'压缩包内文件夹名与压缩包名不同'}), 400
     timestamp = int(round(time.time() * 1000))
     result_txt = os.path.join(extract_file_dir, f"result_aigc_{timestamp}.txt")
     _, name = os.path.split(result_txt)
@@ -42,21 +42,30 @@ def eval_aigc(input):
 
         for root, dirs, files in os.walk(extract_file_path):
             for file in files:
-                if os.path.splitext(file)[1].lower() in ['.jpg', '.png']:
+                if os.path.splitext(file)[-1].lower() in ['.jpg', '.png', '.jpeg', '.bmp']:
                     file_path = os.path.join(root, file)
                     prompt = os.path.split(os.path.split(file_path)[0])[-1]  # 获取提示词
                     prompt = prompt.replace('_', ' ')  # 短语提示词处理
                     img = Image.open(file_path).convert('RGB')
+                    w, h = img.size
+                    # print(w, h)
+                    if w >4096 or h>4096:
+                        os.remove(result_txt)
+                        return jsonify({'error':f'{file} 分辨率超过4096*4096'}), 400
                     img = vis_processors["eval"](img).unsqueeze(0).to(device)
                     txt = text_processors["eval"](prompt)
                     itm_scores = model({"image": img, "text_input": txt}, match_head="itm", inference=True)
                     overall_score = itm_scores.item()
-                    t.write(f"{prompt}\t{file_path}\t{overall_score}\n")
+                    t.write(f"{prompt}\t{file}\t{overall_score}\n")
 
                     # 清理资源
                     del img, txt, itm_scores
                     if device != 'cpu':
                         torch.cuda.empty_cache()
+                else:
+                    return jsonify({'error': '文件中含有不支持的格式的图片'}), 400
+
+
 
     # 删除临时文件
     shutil.rmtree(extract_file_path, ignore_errors=True)

@@ -1,6 +1,6 @@
 import os
 import shutil
-from flask import send_file
+from flask import send_file, jsonify
 from common.File_process import make_dir, calculate_phash # 导入哈希计算函数
 from common.zip import unzip_file, zip_file
 import time
@@ -18,11 +18,15 @@ def data_dedup(input, thresh):
 
     unzip_file(input, extract_file_dir)
     extract_file_path = os.path.join(extract_file_dir, os.path.splitext(filename)[0])
+    if not os.path.exists(extract_file_path): # 确保解压后的路径存在
+        return jsonify({'error':'压缩包内文件夹名与压缩包名不同'}), 400
     file_list = os.listdir(extract_file_path)
     hash_dict = {}
 
     for file in file_list:
         file_path = os.path.join(extract_file_path, file)
+        if os.path.splitext(file)[-1].lower() not in ['.jpg', '.png', '.jpeg', '.bmp']:
+            return jsonify({'error':'文件中含有不支持的格式的图片'}), 400
         # print(file_path)
         phash = calculate_phash(file_path)
         if phash is not None:
